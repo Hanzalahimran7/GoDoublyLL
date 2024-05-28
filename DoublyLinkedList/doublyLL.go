@@ -44,9 +44,10 @@ func (l *DoublyLinkedList) Insert(val int) {
 
 func (l *DoublyLinkedList) Traverse() {
 	for current := l.head; current != nil; {
-		fmt.Println(current.val)
+		fmt.Print(current.val, " => ")
 		current = current.next
 	}
+	fmt.Print("\n")
 }
 
 func (l *DoublyLinkedList) Remove(val int) (bool, error) {
@@ -56,8 +57,12 @@ func (l *DoublyLinkedList) Remove(val int) (bool, error) {
 		for current := l.head; current != nil; {
 			if current.val == val {
 				if current == l.head {
-					l.head = nil
-					l.tail = nil
+					l.head = current.next
+					if l.head != nil {
+						l.head.prev = nil
+					} else {
+						l.tail = nil
+					}
 				} else if current == l.tail {
 					l.tail = current.prev
 					current.prev.next = nil
